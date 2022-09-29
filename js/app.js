@@ -7,6 +7,9 @@ const emailField = document.querySelector("#email")
 const subjectField = document.querySelector("#asunto")
 const messageField = document.querySelector("#mensaje")
 
+//Variable with the regular expression to validate the email field
+const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 eventListeners()
 
 function eventListeners() {
@@ -20,12 +23,9 @@ function eventListeners() {
     messageField.addEventListener("blur", validateForm)
 }
 
-
 //FUNCTIONS
-
 function initApp() {
-    sendingButton.disabled = true
-    sendingButton.classList.add("cursor-not-allowed", "opacity-50")
+    
 }
 
 function validateForm(e) {
@@ -36,7 +36,10 @@ function validateForm(e) {
 
         //Delete errors...
         const error = document.querySelector("p.error")
-        error.remove()
+        if (error) {
+            error.remove()
+        }
+
 
         e.target.classList.remove("border", "border-red-500")
         e.target.classList.add("border", "border-green-500")
@@ -48,12 +51,13 @@ function validateForm(e) {
     }
 
     if (e.target.type === "email") {
-        const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        // const resultadoEmail = e.target.value.indexOf("@")
+        // const resultadoEmail = e.target.value.indexOf("@") this is a bad way, we need to check the email with the regular expression
         // console.log(resultadoEmail)
         if (regularExpression.test(e.target.value)) {
             const error = document.querySelector("p.error")
-            error.remove()
+            if (error) {
+                error.remove()
+            }
 
             e.target.classList.remove("border", "border-red-500")
             e.target.classList.add("border", "border-green-500")
@@ -62,6 +66,11 @@ function validateForm(e) {
 
             showError("The email is not valid")
         }
+    }
+
+    if (regularExpression.test(emailField.value) && subjectField.value !== "" && messageField.value !== "") {
+        sendingButton.disabled = false
+        sendingButton.classList.remove("cursor-not-allowed", "opacity-50")
     }
 }
 
