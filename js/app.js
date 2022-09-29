@@ -29,9 +29,15 @@ function initApp() {
 }
 
 function validateForm(e) {
+
     // console.log(e.target.value)
     // console.log(e.target.type)
     if (e.target.value.length > 0) {
+
+        //Delete errors...
+        const error = document.querySelector("p.error")
+        error.remove()
+
         e.target.classList.remove("border", "border-red-500")
         e.target.classList.add("border", "border-green-500")
     } else {
@@ -46,7 +52,11 @@ function validateForm(e) {
         // const resultadoEmail = e.target.value.indexOf("@")
         // console.log(resultadoEmail)
         if (regularExpression.test(e.target.value)) {
-            console.log("Email valid")
+            const error = document.querySelector("p.error")
+            error.remove()
+
+            e.target.classList.remove("border", "border-red-500")
+            e.target.classList.add("border", "border-green-500")
         } else {
             e.target.classList.add("border", "border-red-500")
 
