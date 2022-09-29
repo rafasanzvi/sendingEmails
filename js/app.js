@@ -21,11 +21,14 @@ function eventListeners() {
     emailField.addEventListener("blur", validateForm)
     subjectField.addEventListener("blur", validateForm)
     messageField.addEventListener("blur", validateForm)
+
+    //Send form
+    form.addEventListener("submit", sendEmail)
 }
 
 //FUNCTIONS
 function initApp() {
-    
+
 }
 
 function validateForm(e) {
@@ -71,6 +74,8 @@ function validateForm(e) {
     if (regularExpression.test(emailField.value) && subjectField.value !== "" && messageField.value !== "") {
         sendingButton.disabled = false
         sendingButton.classList.remove("cursor-not-allowed", "opacity-50")
+    } else {
+        sendingButton.disabled = true
     }
 }
 
@@ -83,5 +88,38 @@ const showError = (message) => {
     if (errors.length === 0) {
         form.appendChild(errorMessage)
     }
+}
+
+
+function sendEmail(e) {
+    e.preventDefault()
+
+    //Show spinner
+    const spinner = document.querySelector("#spinner")
+    spinner.style.display = "flex"
+
+    //After 3 seconds hide the spinner and showing the message
+    setTimeout(() => {
+        spinner.style.display = "none"
+
+        //Message of email sent without problems    
+        const messageEmailIsSent = document.createElement("p")
+        messageEmailIsSent.textContent = "The email has been sent correctly"
+        messageEmailIsSent.classList.add("border", "border-blue-500", "bg-blue-500", "text-white", "font-bold", "uppercase", "p-3", "mt-5", "mb-3", "text-center")
+
+        //Insert paragraph before the spinner    
+        form.insertBefore(messageEmailIsSent, spinner)
+
+        setTimeout(() => {
+            messageEmailIsSent.remove() //Delete message email sent
+            restartForm()
+        }, 4000)
+    }, 4000)
+}
+
+//Function to restart the form
+
+function restartForm() {
+    form.reset()
 }
 
