@@ -1,5 +1,6 @@
 //VARIALBLES
 const sendingButton = document.querySelector("#enviar")
+const resetButton = document.querySelector("#resetBtn")
 const form = document.querySelector("#enviar-mail")
 
 //Inputs variables
@@ -24,11 +25,15 @@ function eventListeners() {
 
     //Send form
     form.addEventListener("submit", sendEmail)
+
+    //Reset form
+    resetButton.addEventListener("click", restartForm)
 }
 
 //FUNCTIONS
 function initApp() {
-
+    sendingButton.disabled = true
+    sendingButton.classList.add("cursor-not-allowed", "opacity-50")
 }
 
 function validateForm(e) {
@@ -118,8 +123,14 @@ function sendEmail(e) {
 }
 
 //Function to restart the form
-
 function restartForm() {
     form.reset()
+    initApp()
 }
+
+
+
+
+
+
 
