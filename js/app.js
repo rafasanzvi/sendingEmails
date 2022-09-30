@@ -1,7 +1,7 @@
 //VARIALBLES
 const sendingButton = document.querySelector("#enviar")
-const resetButton = document.querySelector("#resetBtn")
 const form = document.querySelector("#enviar-mail")
+const resetButton = document.querySelector("#resetBtn")
 
 //Inputs variables
 const emailField = document.querySelector("#email")
@@ -120,13 +120,17 @@ function sendEmail(e) {
             restartForm()
         }, 4000)
     }, 4000)
+    
+
 }
 
 //Function to restart the form
-function restartForm() {
+function restartForm(e) {
     form.reset()
     initApp()
+    e.preventDefault() //This preventDefault is necessary to avoid sending email when user presses the button "reset form"
 }
+
 
 
 
