@@ -112,23 +112,25 @@ function sendEmail(e) {
         messageEmailIsSent.textContent = "The email has been sent correctly"
         messageEmailIsSent.classList.add("border", "border-blue-500", "bg-blue-500", "text-white", "font-bold", "uppercase", "p-3", "mt-5", "mb-3", "text-center")
 
+        if (messageEmailIsSent) {
+            sendingButton.disabled = true
+        }
+
         //Insert paragraph before the spinner    
         form.insertBefore(messageEmailIsSent, spinner)
 
         setTimeout(() => {
             messageEmailIsSent.remove() //Delete message email sent
-            restartForm()
+            restartForm(e)
         }, 4000)
     }, 4000)
-    
-
 }
 
 //Function to restart the form
 function restartForm(e) {
+    e.preventDefault() //This preventDefault is necessary to avoid sending email when user presses the button "reset form"
     form.reset()
     initApp()
-    e.preventDefault() //This preventDefault is necessary to avoid sending email when user presses the button "reset form"
 }
 
 
